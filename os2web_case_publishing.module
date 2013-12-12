@@ -1,0 +1,94 @@
+<?php
+/**
+ * @file
+ * Code for the OS2Web Case Publishing feature.
+ */
+
+include_once 'os2web_case_publishing.features.inc';
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function os2web_case_publishing_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function os2web_case_publishing_theme() {
+  return array(
+    'os2web_case_publishing_documents_list' => array(
+      'variables' => array(
+        'files' => array(),
+        'options' => array(),
+        'attributes' => array(),
+      ),
+    ),
+  );
+}
+
+/**
+ * Theming of the list of documents.
+ *
+ * Used by the Display Documents List.
+ *
+ * @param array $variables
+ *   The variables
+ *
+ * @return string
+ *   The themed output.
+ */
+function theme_os2web_case_publishing_documents_list($variables) {
+  $files = $variables['files'];
+  $options = $variables['options'];
+  $attributes = $variables['attributes'];
+  $output = '';
+
+  if (count($files) > 0) {
+    $output = '';
+    $output .= '<ul' . drupal_attributes($attributes) . '>';
+
+    $num_links = count($files);
+    $i = 1;
+
+    foreach ($files as $key => $file) {
+      if (is_array($file)) {
+        $file = (object) $file;
+      }
+      $class = array();
+      // Add first and last classes to the list of links to help out themers.
+      if ($i == 1) {
+        $class[] = 'first';
+      }
+      if ($i == $num_links) {
+        $class[] = 'last';
+      }
+      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
+
+      $ext = substr($file->uri, strrpos($file->uri, '.') + 1);
+      $link['title'] = !empty($file->description) ? $file->description : $file->filename;
+      $link['title'] .= ' (' . $ext . ', ' . date('d/m-Y') . ')';
+      $link['href'] = file_create_url($file->uri);
+      $link['options'] = array(
+        'attributes' => array(
+          'type' => $file->filemime . '; length=' . $file->filesize,
+          'target' => $options['target'],
+          'title' => check_plain($file->filename),
+        ),
+      );
+
+      // Pass in $link as $options, they share the same keys.
+      $output .= l($link['title'], $link['href'], $link['options']);
+
+      $i++;
+      $output .= "</li>\n";
+    }
+
+    $output .= '</ul>';
+  }
+
+  return $output;
+}

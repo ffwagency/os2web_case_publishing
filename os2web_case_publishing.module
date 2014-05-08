@@ -27,6 +27,13 @@ function os2web_case_publishing_theme() {
         'attributes' => array(),
       ),
     ),
+    'os2web_case_publishing_documents_list_grouped' => array(
+      'variables' => array(
+        'files' => array(),
+        'options' => array(),
+        'attributes' => array(),
+      ),
+    ),
   );
 }
 
@@ -88,6 +95,35 @@ function theme_os2web_case_publishing_documents_list($variables) {
     }
 
     $output .= '</ul>';
+  }
+
+  return $output;
+}
+
+/**
+ * Theming of the list of documents grouped by case.
+ *
+ * Used by the Display Documents List Grouped.
+ *
+ * @param array $variables
+ *   The variables
+ *
+ * @return string
+ *   The themed output.
+ */
+function theme_os2web_case_publishing_documents_list_grouped($variables) {
+  $files = $variables['files'];
+  $options = $variables['options'];
+  $output = '';
+
+  foreach ($files as $group => $f) {
+    $vars = array(
+      'files' => $f,
+      'options' => array(
+        'target' => $options['target'],
+      ),
+    );
+    $output .= "<h3>$group</h3>" . theme('os2web_case_publishing_documents_list', $vars);
   }
 
   return $output;

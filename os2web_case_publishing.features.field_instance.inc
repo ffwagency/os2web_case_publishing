@@ -10,6 +10,46 @@
 function os2web_case_publishing_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-os2web_case_publishing_case-field_os2web_case_case_title'
+  $field_instances['node-os2web_case_publishing_case-field_os2web_case_case_title'] = array(
+    'bundle' => 'os2web_case_publishing_case',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_os2web_case_case_title',
+    'label' => 'Case title',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 4,
+    ),
+  );
+  
   // Exported field_instance: 'node-os2web_case_publishing_case-field_os2web_case_case_id'
   $field_instances['node-os2web_case_publishing_case-field_os2web_case_case_id'] = array(
     'bundle' => 'os2web_case_publishing_case',
@@ -52,7 +92,7 @@ function os2web_case_publishing_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 31,
+      'weight' => 5,
     ),
   );
 
@@ -96,7 +136,7 @@ function os2web_case_publishing_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 33,
+      'weight' => 7,
     ),
   );
 
@@ -136,7 +176,7 @@ function os2web_case_publishing_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 32,
+      'weight' => 6,
     ),
   );
 
@@ -323,6 +363,7 @@ function os2web_case_publishing_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Case title');
   t('Case ID');
   t('Document Date');
   t('Document File');
